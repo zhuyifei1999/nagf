@@ -90,35 +90,40 @@ class NagfView {
 
 		$sections = array();
 		foreach ($hosts as $hostName) {
-			$html .= '<h3 id="h_' . htmlspecialchars($hostName) . '">' . htmlspecialchars($hostName) . '</h3>';
+			if ($hostName === 'overview') {
+				$hostTitle = "$project cluster";
+				$hostTarget = '*';
+			} else {
+				$hostTitle = $hostName;
+				$hostTarget = $hostName;
+			}
+			$html .= '<h3 id="h_' . htmlspecialchars($hostName) . '">' . htmlspecialchars($hostTitle) . '</h3>';
 			foreach ($graphConfigs as $graphID => &$graph) {
 				$html .= '<h4 id="h_' . htmlspecialchars("{$hostName}_{$graphID}") . '">'
-					. htmlspecialchars("$hostName: {$graph['title']}")
+					. htmlspecialchars("$hostTitle {$graph['title']}")
 					. '</h4>';
-				$targetQuery = '';
 
-				if ($hostName !== 'overview') {
-					$hostTarget = $hostName;
-					$targets = $graph['targets'];
-				} else {
-					$hostTarget = '*';
+				if ($hostName === 'overview') {
 					if (isset($graph['overview'])) {
 						$targets = $graph['overview'];
 					} else {
-						// Default overview: sum() the source values
+						// Default graph for cluster overview: apply sum() to the values
 						$targets = array_map(function ($target) {
 							return preg_replace('/HOST([^\),]+)/', 'sum(HOST$1)', $target);
 						}, $graph['targets']);
 					}
+				} else {
+					$targets = $graph['targets'];
 				}
 
+				$targetQuery = '';
 				foreach ($targets as $target) {
 					$targetQuery .= '&target=' . urlencode(str_replace('HOST', "$project.$hostTarget", $target));
 				}
 
 				$html .= '<img width="800" height="250" src="//graphite.wmflabs.org/render/?'
 					. htmlspecialchars(http_build_query(array(
-						'title' => $graph['title'] . ' last day',
+						'title' => "$hostTitle {$graph['title']} last day",
 						'width' => 800,
 						'height' => 250,
 						'from' => '-24h',
@@ -128,7 +133,7 @@ class NagfView {
 					. '">'
 					. '<br><img width="400" height="250" src="//graphite.wmflabs.org/render/?'
 					. htmlspecialchars(http_build_query(array(
-						'title' => $graph['title'] . ' last week',
+						'title' => "$hostTitle {$graph['title']} last week",
 						'width' => 400,
 						'height' => 250,
 						'from' => '-1week',
@@ -138,7 +143,7 @@ class NagfView {
 					. '">'
 					. '<img width="400" height="250" src="//graphite.wmflabs.org/render/?'
 					. htmlspecialchars(http_build_query(array(
-						'title' => $graph['title'] . ' last month',
+						'title' => "$hostTitle {$graph['title']} last month",
 						'width' => 400,
 						'height' => 250,
 						'from' => '-1month',

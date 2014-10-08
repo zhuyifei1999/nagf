@@ -6,7 +6,7 @@ class WebCache {
 	 * @return bool
 	 */
 	private static function validKey($key) {
-		return preg_match('/^[a-z\-]+$/', $key);
+		return preg_match('/^[a-z0-9\-]+$/', $key);
 	}
 
 	/**

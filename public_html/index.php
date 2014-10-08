@@ -5,10 +5,6 @@ require_once __DIR__ . '/../inc/Graphite.php';
 require_once __DIR__ . '/../inc/NagfView.php';
 require_once __DIR__ . '/../inc/Nagf.php';
 
-// var_dump( Graphite::getProjects() );
-
-// var_dump( Graphite::getHostsForProject( 'integration') );
-
 $app = new Nagf();
 $view = $app->getView();
 
@@ -47,12 +43,12 @@ $view = $app->getView();
 <script src="./main.js"></script>
 <footer class="nagf-footer" role="contentinfo">
 	<div class="container">
-		<p>Created by <a href="https://github.com/Krinkle" target="_blank">@Krinkle</a>.</p>
-		<p>Code licensed under <a href="http://krinkle.mit-license.org/" target="_blank">MIT</a>.</p>
-		<ul class="nagf-footer-links muted">
-			<li><a dir="ltr" lang="en" href="https://github.com/wikimedia/nagf">Source repository</a></li>
+		<p>Created by <a href="https://github.com/Krinkle">@Krinkle</a>.</p>
+		<p>Code licensed under <a href="http://krinkle.mit-license.org/">MIT</a>.</p>
+		<ul class="nagf-footer-links">
+			<li><a href="https://github.com/wikimedia/nagf">Source repository</a></li>
 			<li>·</li>
-			<li><a dir="ltr" lang="en" href="https://github.com/wikimedia/nagf/issues">Issue tracker</a></li>
+			<li><a href="https://github.com/wikimedia/nagf/issues">Issue tracker</a></li>
 		</ul>
 	</div>
 </footer>

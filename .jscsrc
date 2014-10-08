@@ -2,6 +2,7 @@
 	"preset": "wikimedia",
 	"excludeFiles": [
 		"node_modules/**",
+		"vendor/**",
 		"public_html/lib/**"
 	]
 }

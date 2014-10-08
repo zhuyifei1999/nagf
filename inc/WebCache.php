@@ -5,8 +5,8 @@ class WebCache {
 	 * @param string $key
 	 * @return bool
 	 */
-	private static function validKey( $key ) {
-		return preg_match( '/^[a-z\-]+$/', $key );
+	private static function validKey($key) {
+		return preg_match('/^[a-z\-]+$/', $key);
 	}
 
 	/**
@@ -17,37 +17,37 @@ class WebCache {
 	 * @param int $expire How long this may be cached
 	 * @return string
 	 */
-	public static function get( $key, $url, $expire = 3600 ) {
+	public static function get($key, $url, $expire = 3600) {
 		static $dir;
-		if ( $dir === null ) {
-			$dir = dirname( __DIR__ ) . '/cache';
+		if ($dir === null) {
+			$dir = dirname(__DIR__) . '/cache';
 		}
 
-		if ( !self::validKey( $key ) ) {
-			throw new Exception( 'Invalid key' );
+		if (!self::validKey($key)) {
+			throw new Exception('Invalid key');
 		}
 
 		$cacheFile = "$dir/$key.cache";
-		$hasCache = file_exists( $cacheFile );
+		$hasCache = file_exists($cacheFile);
 
-		if ( $hasCache && filemtime( $cacheFile ) > ( time() - $expire ) ) {
+		if ($hasCache && filemtime($cacheFile) > (time() - $expire)) {
 			// Cache file is new enough, use it.
-			return file_get_contents( $cacheFile );
+			return file_get_contents($cacheFile);
 		}
 
 		// Fetch fresh copy from remote
-		$value = file_get_contents( $url );
-		if ( $value === false ) {
-			if ( $hasCache ) {
+		$value = file_get_contents($url);
+		if ($value === false) {
+			if ($hasCache) {
 				// Keep using cache for now, remote failed
-				return file_get_contents( $cacheFile );
+				return file_get_contents($cacheFile);
 			}
-			throw new Exception( 'Unable to fetch ' . $url );
+			throw new Exception('Unable to fetch ' . $url);
 		}
 
-		$written = file_put_contents( $cacheFile, $value, LOCK_EX );
-		if ( $written === false ) {
-			throw new Exception( 'Unable to write to cache' );
+		$written = file_put_contents($cacheFile, $value, LOCK_EX);
+		if ($written === false) {
+			throw new Exception('Unable to write to cache');
 		}
 
 		return $value;

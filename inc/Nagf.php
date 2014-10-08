@@ -11,16 +11,16 @@ class Nagf {
 		$viewData->hosts = null;
 		$viewData->hostGraphsConfig = $this->getHostGraphsConfig();
 
-		if ( isset( $_GET['project'] ) ) {
+		if (isset($_GET['project'])) {
 			$project = $_GET['project'];
-			$hosts = Graphite::getHostsForProject( $project );
-			if ( $hosts ) {
+			$hosts = Graphite::getHostsForProject($project);
+			if ($hosts) {
 				$viewData->project = $project;
 				$viewData->hosts = $hosts;
 			}
 		}
 
-		$this->view = new NagfView( $viewData );
+		$this->view = new NagfView($viewData);
 	}
 
 	public function getView() {

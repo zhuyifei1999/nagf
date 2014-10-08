@@ -2,7 +2,7 @@
 class NagfView {
 	protected $data;
 
-	public function __construct( stdClass $data ) {
+	public function __construct(stdClass $data) {
 		$this->data = $data;
 	}
 
@@ -14,11 +14,11 @@ class NagfView {
 		$projects = Graphite::getProjects();
 		return '<select name="project" required class="form-control nagf-select-project">'
 			. '<option value="" disabled>Select project</option>'
-			. implode( '', array_map( function ( $project ) use ( $data ) {
+			. implode('', array_map(function ($project) use ($data) {
 				return '<option'
-					. ( $project === $data->project ? ' selected' : '' )
-					. '>' . htmlspecialchars( $project ) . '</option>';
-			}, $projects ) )
+					. ($project === $data->project ? ' selected' : '')
+					. '>' . htmlspecialchars($project) . '</option>';
+			}, $projects))
 			. '</select>';
 	}
 
@@ -32,11 +32,11 @@ class NagfView {
 
 		$html = '<select required class="form-control nagf-select-metric">'
 			. '<option value="" disabled>Select metric</option>';
-		foreach ( $hosts as $host ) {
-			$html .= '<option value="h-' . htmlspecialchars( $host ) . '">' .  htmlspecialchars( $host ) . '</option>';
-			foreach ( $graphConfigs as $graphID => &$graph ) {
-				$html .= '<option value="h-' . htmlspecialchars( "$host-$graphID" ) . '">'
-					. htmlspecialchars( "$host: {$graph['title']}" )
+		foreach ($hosts as $host) {
+			$html .= '<option value="h-' . htmlspecialchars($host) . '">' .  htmlspecialchars($host) . '</option>';
+			foreach ($graphConfigs as $graphID => &$graph) {
+				$html .= '<option value="h-' . htmlspecialchars("$host-$graphID") . '">'
+					. htmlspecialchars("$host: {$graph['title']}")
 					. '</option>';
 			}
 		}
@@ -48,7 +48,7 @@ class NagfView {
 	 * @return string HTML
 	 */
 	public function getHostForm() {
-		if ( !$this->data->project ) {
+		if (!$this->data->project) {
 			return '';
 		}
 		return '<form class="navbar-form navbar-right only-js" role="form">'
@@ -66,7 +66,7 @@ class NagfView {
 	 * @return string HTML
 	 */
 	public function getPage() {
-		if ( $this->data->project ) {
+		if ($this->data->project) {
 			return $this->getProjectPage(
 				$this->data->project,
 				$this->data->hosts,
@@ -81,32 +81,34 @@ class NagfView {
 	 * @param Array $hosts
 	 * @return string HTML
 	 */
-	protected function getProjectPage( $project, Array $hosts, Array $graphConfigs ) {
-		$html = '<h1>' . htmlspecialchars( $project ) . '</h1>';
+	protected function getProjectPage($project, Array $hosts, Array $graphConfigs) {
+		$html = '<h1>' . htmlspecialchars($project) . '</h1>';
 
-		array_unshift( $hosts, 'overview' );
+		array_unshift($hosts, 'overview');
 
 		$sections = array();
-		foreach ( $hosts as $hostName ) {
+		foreach ($hosts as $hostName) {
 			$host = $hostName === 'overview' ? '*' : $hostName;
-			$html .= '<h3 id="h-' . htmlspecialchars( $host ) . '">' . htmlspecialchars( $hostName ) . '</h3>';
-			foreach ( $graphConfigs as $graphID => &$graph ) {
-				$html .= '<h4 id="h-' . htmlspecialchars( "$host-$graphID" ) . '">' . htmlspecialchars( "$hostName: {$graph['title']}" ) . '</h4>';
+			$html .= '<h3 id="h-' . htmlspecialchars($host) . '">' . htmlspecialchars($hostName) . '</h3>';
+			foreach ($graphConfigs as $graphID => &$graph) {
+				$html .= '<h4 id="h-' . htmlspecialchars("$host-$graphID") . '">'
+					. htmlspecialchars("$hostName: {$graph['title']}")
+					. '</h4>';
 				$targetQuery = '';
 
-				if ( $hostName !== 'overview' ) {
+				if ($hostName !== 'overview') {
 					$targets = $graph['targets'];
-				} elseif ( isset( $graph['overview'] ) ) {
+				} elseif (isset($graph['overview'])) {
 					$targets = $graph['overview'];
 				} else {
 					// Default overview: sum() the source values
-					$targets = array_map( function ( $target ) {
-						return preg_replace( '/HOST([^\)]+)/', 'sum(HOST$1)', $target );
-					}, $graph['targets'] );
+					$targets = array_map(function ($target) {
+						return preg_replace('/HOST([^\)]+)/', 'sum(HOST$1)', $target);
+					}, $graph['targets']);
 				}
 
-				foreach ( $targets as $target ) {
-					$targetQuery .= '&target=' . urlencode( str_replace( 'HOST', "$project.$host", $target ) );
+				foreach ($targets as $target) {
+					$targetQuery .= '&target=' . urlencode(str_replace('HOST', "$project.$host", $target));
 				}
 
 				$html .= '<img width="800" height="250" src="//graphite.wmflabs.org/render/?'
@@ -117,7 +119,7 @@ class NagfView {
 						'from' => '-24h',
 						'hideLegend' => 'false',
 						'uniqueLegend' => 'true',
-					)) . $targetQuery )
+					)) . $targetQuery)
 					. '">'
 					. '<br><img width="400" height="250" src="//graphite.wmflabs.org/render/?'
 					. htmlspecialchars(http_build_query(array(
@@ -127,7 +129,7 @@ class NagfView {
 						'from' => '-1week',
 						'hideLegend' => 'false',
 						'uniqueLegend' => 'true',
-					)) . $targetQuery )
+					)) . $targetQuery)
 					. '">'
 					. '<img width="400" height="250" src="//graphite.wmflabs.org/render/?'
 					. htmlspecialchars(http_build_query(array(
@@ -137,7 +139,7 @@ class NagfView {
 						'from' => '-1month',
 						'hideLegend' => 'false',
 						'uniqueLegend' => 'true',
-					)) . $targetQuery )
+					)) . $targetQuery)
 					. '">';
 			}
 		}

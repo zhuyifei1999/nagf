@@ -8,10 +8,10 @@ class Graphite {
 			'graphite-index',
 			'http://graphite.wmflabs.org/metrics/find?query=*'
 		);
-		$data = json_decode( $json );
-		$projects = array_map( function ( $obj ) {
+		$data = json_decode($json);
+		$projects = array_map(function ($obj) {
 			return $obj->id;
-		}, $data );
+		}, $data);
 		return $projects;
 	}
 
@@ -19,16 +19,16 @@ class Graphite {
 	 * @param string $project
 	 * @return array
 	 */
-	public static function getHostsForProject( $project ) {
+	public static function getHostsForProject($project) {
 		$json = WebCache::get(
 			'graphite-project-' . $project,
 			'http://graphite.wmflabs.org/metrics/find?'
-				. http_build_query( array( 'query' => "$project.*" ) )
+			. http_build_query(array('query' => "$project.*"))
 		);
-		$data = json_decode( $json );
-		$projects = array_map( function ( $obj ) {
+		$data = json_decode($json);
+		$projects = array_map(function ($obj) {
 			return $obj->text;
-		}, $data );
+		}, $data);
 		return $projects;
 	}
 }

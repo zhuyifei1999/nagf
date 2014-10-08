@@ -35,12 +35,18 @@ class NagfView {
 
 		array_unshift($hosts, 'overview');
 		foreach ($hosts as $host) {
-			$html .= '<option value="h_' . htmlspecialchars($host) . '">' .  htmlspecialchars($host) . '</option>';
+			if ($host === 'overview') {
+				$title = "$project cluster";
+			} else {
+				$title = $host;
+			}
+			$html .= '<optgroup label="' . htmlspecialchars($title) . '">';
 			foreach ($graphConfigs as $graphID => &$graph) {
 				$html .= '<option value="h_' . htmlspecialchars("{$host}_{$graphID}") . '">'
-					. htmlspecialchars("$host: {$graph['title']}")
+					. htmlspecialchars($graph['title'])
 					. '</option>';
 			}
+			$html .= '</optgroup>';
 		}
 		$html .= '</select>';
 		return $html;

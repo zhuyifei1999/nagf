@@ -12,8 +12,7 @@ $view = $app->getView();
 <html dir="ltr" lang="en-US" class="no-js">
 <head>
 	<meta charset="utf-8">
-	<title>Nagf - WMFLabs</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Nagf - wmflabs</title>
 	<link rel="stylesheet" href="./lib/bootstrap-3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./main.css">
 	<script src="./head.js"></script>
@@ -24,7 +23,7 @@ $view = $app->getView();
 		<div class="navbar-header">
 			<a class="navbar-brand" href="./">Nagf</a>
 		</div>
-		<div class="navbar-collapse collapse">
+		<div class="navbar-collapse">
 			<form class="navbar-form navbar-right" role="form" action="./" method="get">
 				<div class="form-group">
 					<?php echo $view->getProjectMenu(); ?>

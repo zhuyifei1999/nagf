@@ -32,6 +32,8 @@ class NagfView {
 
 		$html = '<select required class="form-control nagf-select-metric">'
 			. '<option value="" disabled>Select metric</option>';
+
+		array_unshift($hosts, 'overview');
 		foreach ($hosts as $host) {
 			$html .= '<option value="h_' . htmlspecialchars($host) . '">' .  htmlspecialchars($host) . '</option>';
 			foreach ($graphConfigs as $graphID => &$graph) {
@@ -88,23 +90,26 @@ class NagfView {
 
 		$sections = array();
 		foreach ($hosts as $hostName) {
-			$host = $hostName === 'overview' ? '*' : $hostName;
-			$html .= '<h3 id="h_' . htmlspecialchars($host) . '">' . htmlspecialchars($hostName) . '</h3>';
+			$html .= '<h3 id="h_' . htmlspecialchars($hostName) . '">' . htmlspecialchars($hostName) . '</h3>';
 			foreach ($graphConfigs as $graphID => &$graph) {
-				$html .= '<h4 id="h_' . htmlspecialchars("{$host}_{$graphID}") . '">'
+				$html .= '<h4 id="h_' . htmlspecialchars("{$hostName}_{$graphID}") . '">'
 					. htmlspecialchars("$hostName: {$graph['title']}")
 					. '</h4>';
 				$targetQuery = '';
 
 				if ($hostName !== 'overview') {
+					$hostTarget = $hostName;
 					$targets = $graph['targets'];
-				} elseif (isset($graph['overview'])) {
-					$targets = $graph['overview'];
 				} else {
-					// Default overview: sum() the source values
-					$targets = array_map(function ($target) {
-						return preg_replace('/HOST([^\)]+)/', 'sum(HOST$1)', $target);
-					}, $graph['targets']);
+					$hostTarget = '*';
+					if (isset($graph['overview'])) {
+						$targets = $graph['overview'];
+					} else {
+						// Default overview: sum() the source values
+						$targets = array_map(function ($target) {
+							return preg_replace('/HOST([^\),]+)/', 'sum(HOST$1)', $target);
+						}, $graph['targets']);
+					}
 				}
 
 				foreach ($targets as $target) {

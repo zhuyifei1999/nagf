@@ -50,9 +50,9 @@ $view = $app->getView();
 		<p>Created by <a href="https://github.com/Krinkle" target="_blank">@Krinkle</a>.</p>
 		<p>Code licensed under <a href="http://krinkle.mit-license.org/" target="_blank">MIT</a>.</p>
 		<ul class="nagf-footer-links muted">
-			<li><a dir="ltr" lang="en" href="https://github.com/Krinkle/nagf">Source repository</a></li>
+			<li><a dir="ltr" lang="en" href="https://github.com/wikimedia/nagf">Source repository</a></li>
 			<li>·</li>
-			<li><a dir="ltr" lang="en" href="https://github.com/Krinkle/nagf/issues">Issue tracker</a></li>
+			<li><a dir="ltr" lang="en" href="https://github.com/wikimedia/nagf/issues">Issue tracker</a></li>
 		</ul>
 	</div>
 </footer>

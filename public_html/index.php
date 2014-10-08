@@ -45,5 +45,16 @@ $view = $app->getView();
 <script src="./lib/jquery-1.11.0/jquery.min.js"></script>
 <script src="./lib/bootstrap-3.1.1/js/bootstrap.min.js"></script>
 <script src="./main.js"></script>
+<footer class="nagf-footer" role="contentinfo">
+	<div class="container">
+		<p>Created by <a href="https://github.com/Krinkle" target="_blank">@Krinkle</a>.</p>
+		<p>Code licensed under <a href="http://krinkle.mit-license.org/" target="_blank">MIT</a>.</p>
+		<ul class="nagf-footer-links muted">
+			<li><a dir="ltr" lang="en" href="https://github.com/Krinkle/nagf">Source repository</a></li>
+			<li>·</li>
+			<li><a dir="ltr" lang="en" href="https://github.com/Krinkle/nagf/issues">Issue tracker</a></li>
+		</ul>
+	</div>
+</footer>
 </body>
 </html>

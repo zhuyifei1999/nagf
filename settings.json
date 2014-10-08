@@ -1,0 +1,13 @@
+{
+	"hosts": [
+		"overview",
+		"integration-slave1001",
+		"integration-slave1002",
+		"integration-slave1003",
+		"integration-slave1006",
+		"integration-slave1007",
+		"integration-slave1008",
+		"integration-slave1009",
+		"integration-puppetmaster",
+	]
+}

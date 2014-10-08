@@ -1,0 +1,12 @@
+body {
+	padding-top: 70px;
+}
+
+.js .only-no-js {
+	display: none;
+}
+
+.no-js .only-js {
+	display: none;
+}
+

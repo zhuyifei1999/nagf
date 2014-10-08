@@ -67,6 +67,20 @@ class Nagf {
 					'alias(stacked(sum(HOST.diskspace.*.byte_avail.value)),"byte_avail")',
 				),
 			),
+			'network-bytes' => array(
+				'title' => 'Network bytes',
+				'targets' => array(
+					'alias(HOST.network.eth0.rx_byte.value,"Bytes received")',
+					'alias(HOST.network.eth0.tx_byte.value,"Bytes sent")',
+				),
+			),
+			'network-packets' => array(
+				'title' => 'Network packets',
+				'targets' => array(
+					'alias(HOST.network.eth0.rx_packets.value,"Packets received")',
+					'alias(HOST.network.eth0.tx_packets.value,"Packets sent")',
+				),
+			),
 		);
 	}
 }

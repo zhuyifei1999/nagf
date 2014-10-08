@@ -33,9 +33,9 @@ class NagfView {
 		$html = '<select required class="form-control nagf-select-metric">'
 			. '<option value="" disabled>Select metric</option>';
 		foreach ($hosts as $host) {
-			$html .= '<option value="h-' . htmlspecialchars($host) . '">' .  htmlspecialchars($host) . '</option>';
+			$html .= '<option value="h_' . htmlspecialchars($host) . '">' .  htmlspecialchars($host) . '</option>';
 			foreach ($graphConfigs as $graphID => &$graph) {
-				$html .= '<option value="h-' . htmlspecialchars("$host-$graphID") . '">'
+				$html .= '<option value="h_' . htmlspecialchars("{$host}_{$graphID}") . '">'
 					. htmlspecialchars("$host: {$graph['title']}")
 					. '</option>';
 			}
@@ -89,9 +89,9 @@ class NagfView {
 		$sections = array();
 		foreach ($hosts as $hostName) {
 			$host = $hostName === 'overview' ? '*' : $hostName;
-			$html .= '<h3 id="h-' . htmlspecialchars($host) . '">' . htmlspecialchars($hostName) . '</h3>';
+			$html .= '<h3 id="h_' . htmlspecialchars($host) . '">' . htmlspecialchars($hostName) . '</h3>';
 			foreach ($graphConfigs as $graphID => &$graph) {
-				$html .= '<h4 id="h-' . htmlspecialchars("$host-$graphID") . '">'
+				$html .= '<h4 id="h_' . htmlspecialchars("{$host}_{$graphID}") . '">'
 					. htmlspecialchars("$hostName: {$graph['title']}")
 					. '</h4>';
 				$targetQuery = '';
@@ -108,7 +108,7 @@ class NagfView {
 				}
 
 				foreach ($targets as $target) {
-					$targetQuery .= '&target=' . urlencode(str_replace('HOST', "$project.$host", $target));
+					$targetQuery .= '&target=' . urlencode(str_replace('HOST', "$project.$hostTarget", $target));
 				}
 
 				$html .= '<img width="800" height="250" src="//graphite.wmflabs.org/render/?'

@@ -1,5 +1,20 @@
 body {
+	/* Reserve space for the fixed header */
 	padding-top: 70px;
+}
+
+h3 {
+	/* Offset fixed header for anchor links */
+	padding-top: 60px;
+	/* Simulate the default h3 margin-top 20px */
+	margin-top: -40px;
+}
+
+h4 {
+	/* Offset fixed header for anchor links */
+	padding-top: 60px;
+	/* Simulate bootstrap h3 margin-top 10px */
+	margin-top: -50px;
 }
 
 .js .only-no-js {

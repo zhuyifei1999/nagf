@@ -38,6 +38,7 @@ class Nagf {
 					'alias(color(stacked(HOST.cpu.total.iowait.value),"#ff8a60"),"Wait I/O")',
 					'alias(alpha(color(stacked(HOST.cpu.total.idle.value),"#e2e2f2"),0.4),"Idle")',
 				),
+				'overview' => 'sum',
 			),
 			'memory' => array(
 				'title' => 'Memory',
@@ -66,6 +67,7 @@ class Nagf {
 				'overview' => array(
 					'alias(stacked(sum(HOST.diskspace.*.byte_avail.value)),"byte_avail")',
 				),
+				'overview' => 'sum',
 			),
 			'network-bytes' => array(
 				'title' => 'Network bytes',
@@ -73,6 +75,7 @@ class Nagf {
 					'alias(HOST.network.eth0.rx_byte.value,"Bytes received")',
 					'alias(HOST.network.eth0.tx_byte.value,"Bytes sent")',
 				),
+				'overview' => 'sum',
 			),
 			'network-packets' => array(
 				'title' => 'Network packets',
@@ -80,6 +83,7 @@ class Nagf {
 					'alias(HOST.network.eth0.rx_packets.value,"Packets received")',
 					'alias(HOST.network.eth0.tx_packets.value,"Packets sent")',
 				),
+				'overview' => 'sum',
 			),
 		);
 	}

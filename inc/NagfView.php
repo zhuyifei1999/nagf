@@ -110,12 +110,12 @@ class NagfView {
 					. '</h4>';
 
 				if ($hostName === 'overview') {
-					if (isset($graph['overview'])) {
+					if (is_array($graph['overview'])) {
 						$targets = $graph['overview'];
 					} else {
 						// Default graph for cluster overview: apply sum() to the values
-						$targets = array_map(function ($target) {
-							return preg_replace('/HOST([^\),]+)/', 'sum(HOST$1)', $target);
+						$targets = array_map(function ($target) use ($graph) {
+							return preg_replace('/HOST([^\),]+)/', $graph['overview'] . '(HOST$1)', $target);
 						}, $graph['targets']);
 					}
 				} else {

@@ -85,6 +85,13 @@ class Nagf {
 				),
 				'overview' => 'sum',
 			),
+			'puppetagent' => array(
+				'title' => 'Puppet agent',
+				'targets' => array(
+					'aliasByNode(HOST.puppetagent.failed_events.value,-2)',
+				),
+				'overview' => 'stacked',
+			),
 		);
 	}
 }

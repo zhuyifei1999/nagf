@@ -4,6 +4,9 @@
 		"squizlabs/php_codesniffer": "1.*"
 	},
 	"scripts": {
-		"test": "parallel-lint --exclude vendor --exclude node_modules . && phpcs . --standard=./test/codesniffer --ignore=vendor/*,node_modules/* --extensions=php --tab-width=4"
+		"test": [
+			"parallel-lint --exclude vendor --exclude node_modules .",
+			"phpcs . --standard=./test/codesniffer --ignore=vendor/*,node_modules/* --extensions=php --tab-width=4"
+		]
 	}
 }

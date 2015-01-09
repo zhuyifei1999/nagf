@@ -27,6 +27,10 @@ class WebCache {
 			throw new Exception('Invalid key');
 		}
 
+		if (!is_writable($dir)) {
+			throw new Exception('Unable to write to cache directory');
+		}
+
 		$cacheFile = "$dir/$key.cache";
 		$hasCache = file_exists($cacheFile);
 
@@ -47,7 +51,7 @@ class WebCache {
 
 		$written = file_put_contents($cacheFile, $value, LOCK_EX);
 		if ($written === false) {
-			throw new Exception('Unable to write to cache');
+			throw new Exception('Unable to write to cache file');
 		}
 
 		return $value;

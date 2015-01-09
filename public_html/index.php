@@ -5,51 +5,15 @@ require_once __DIR__ . '/../inc/Graphite.php';
 require_once __DIR__ . '/../inc/NagfView.php';
 require_once __DIR__ . '/../inc/Nagf.php';
 
-$app = new Nagf();
-$view = $app->getView();
+header('content-type: text/html; charset=utf-8');
 
-?><!DOCTYPE html>
-<html dir="ltr" lang="en-US" class="no-js">
-<head>
-	<meta charset="utf-8">
-	<title>Nagf - wmflabs</title>
-	<link rel="stylesheet" href="./lib/bootstrap-3.1.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./main.css">
-	<script src="./head.js"></script>
-</head>
-<body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="./">Nagf</a>
-		</div>
-		<div class="navbar-collapse">
-			<form class="navbar-form navbar-right" role="form" action="./" method="get">
-				<div class="form-group">
-					<?php echo $view->getProjectMenu(); ?>
-				</div>
-				<button type="submit" class="btn btn-success only-no-js">Show</button>
-			</form>
-			<?php echo $view->getHostForm(); ?>
-		</div><!--/.nav-collapse -->
-	</div>
-</div>
-<div class="container">
-<?php echo $view->getPage(); ?>
-</div>
-<script src="./lib/jquery-1.11.0/jquery.min.js"></script>
-<script src="./lib/bootstrap-3.1.1/js/bootstrap.min.js"></script>
-<script src="./main.js"></script>
-<footer class="nagf-footer" role="contentinfo">
-	<div class="container">
-		<p>Created by <a href="https://github.com/Krinkle">@Krinkle</a>.</p>
-		<p>Code licensed under <a href="http://krinkle.mit-license.org/">MIT</a>.</p>
-		<ul class="nagf-footer-links">
-			<li><a href="https://github.com/wikimedia/nagf">Source repository</a></li>
-			<li>·</li>
-			<li><a href="https://github.com/wikimedia/nagf/issues">Issue tracker</a></li>
-		</ul>
-	</div>
-</footer>
-</body>
-</html>
+try {
+	$app = new Nagf();
+	$view = $app->getView();
+	$html = $view->output();
+} catch (Exception $e) {
+	http_response_code(500);
+	$html = NagfView::error($e);
+}
+
+echo $html;

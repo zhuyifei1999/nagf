@@ -181,7 +181,9 @@ class NagfView {
 	<title>Nagf - wmflabs</title>
 	<link rel="stylesheet" href="./lib/bootstrap-3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./main.css">
-	<script src="./head.js"></script>
+<script>document.documentElement.className =
+document.documentElement.className.replace( /(^|\s)no-js(\s|$)/, '$1js$2' );
+</script>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">

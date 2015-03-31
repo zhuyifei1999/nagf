@@ -17,12 +17,20 @@ h4 {
 	margin-top: -50px;
 }
 
+.btn[hidden] {
+  visibility: hidden;
+}
+
 .js .only-no-js {
 	display: none;
 }
 
 .no-js .only-js {
 	display: none;
+}
+
+.container img {
+  background-color: #f9f9f9;
 }
 
 .nagf-footer {

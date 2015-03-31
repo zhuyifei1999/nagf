@@ -59,7 +59,7 @@ class NagfView {
 		if (!$this->data->project) {
 			return '';
 		}
-		return '<form class="navbar-form navbar-right only-js" role="form">'
+		return '<form class="navbar-form navbar-left only-js" role="form">'
 			. '<div class="form-group">'
 			. $this->getHostMenu(
 				$this->data->project,
@@ -67,6 +67,34 @@ class NagfView {
 				$this->data->hostGraphsConfig
 			)
 			. '</div>'
+			. '</form>';
+	}
+
+	/**
+	 * @return string HTML
+	 */
+	protected function getRangeMenu() {
+		$html = '';
+		foreach ($this->data->ranges as $range => $checked) {
+			$html .= '<div class="checkbox"><label><input type="checkbox" class="nagf-select-range"'
+				. ' value="' . htmlspecialchars($range) . '"'
+				. ( $checked ? ' checked' : '' )
+				. '> ' . htmlspecialchars(ucfirst($range))
+				. '</label></div> ';
+		}
+		return $html;
+	}
+
+	/**
+	 * @return string HTML
+	 */
+	public function getRangeForm() {
+		if (!$this->data->project) {
+			return '';
+		}
+		return '<form class="navbar-form navbar-left only-js" role="form">'
+			. $this->getRangeMenu()
+			. '<button type="submit" class="btn btn-success" id="nagf-select-range-update" hidden>Update</button>'
 			. '</form>';
 	}
 
@@ -127,36 +155,22 @@ class NagfView {
 					$targetQuery .= '&target=' . urlencode(str_replace('HOST', "$project.$hostTarget", $target));
 				}
 
-				$html .= '<img width="800" height="250" src="//graphite.wmflabs.org/render/?'
-					. htmlspecialchars(http_build_query(array(
-						'title' => "$hostTitle {$graph['title']} last day",
-						'width' => 800,
-						'height' => 250,
-						'from' => '-24h',
-						'hideLegend' => 'false',
-						'uniqueLegend' => 'true',
-					)) . $targetQuery)
-					. '">'
-					. '<br><img width="400" height="250" src="//graphite.wmflabs.org/render/?'
-					. htmlspecialchars(http_build_query(array(
-						'title' => "$hostTitle {$graph['title']} last week",
-						'width' => 400,
-						'height' => 250,
-						'from' => '-1week',
-						'hideLegend' => 'false',
-						'uniqueLegend' => 'true',
-					)) . $targetQuery)
-					. '">'
-					. '<img width="400" height="250" src="//graphite.wmflabs.org/render/?'
-					. htmlspecialchars(http_build_query(array(
-						'title' => "$hostTitle {$graph['title']} last month",
-						'width' => 400,
-						'height' => 250,
-						'from' => '-1month',
-						'hideLegend' => 'false',
-						'uniqueLegend' => 'true',
-					)) . $targetQuery)
-					. '">';
+				foreach ($this->data->ranges as $range => $checked) {
+					if (!$checked) {
+						continue;
+					}
+					$title = "$hostTitle {$graph['title']} last {$range}";
+					$html .= '<img width="800" height="250" src="//graphite.wmflabs.org/render/?'
+						. htmlspecialchars(http_build_query(array(
+							'title' => $title,
+							'width' => 800,
+							'height' => 250,
+							'from' => '-1' . $range,
+							'hideLegend' => 'false',
+							'uniqueLegend' => 'true',
+						)) . $targetQuery)
+						. '" alt="' . htmlspecialchars($title) . '" title="' . htmlspecialchars($title) . '">';
+				}
 			}
 		}
 
@@ -186,7 +200,7 @@ document.documentElement.className.replace( /(^|\s)no-js(\s|$)/, '$1js$2' );
 </script>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="./">Nagf</a>
@@ -208,6 +222,7 @@ document.documentElement.className.replace( /(^|\s)no-js(\s|$)/, '$1js$2' );
 </div>
 <script src="./lib/jquery-1.11.2/jquery.min.js"></script>
 <script src="./lib/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+<script src="./lib/jquery-cookie/jquery.cookie.js"></script>
 <script src="./main.js"></script>
 <footer class="nagf-footer" role="contentinfo">
 	<div class="container">

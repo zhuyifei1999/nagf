@@ -179,7 +179,7 @@ class NagfView {
 <head>
 	<meta charset="utf-8">
 	<title>Nagf - wmflabs</title>
-	<link rel="stylesheet" href="./lib/bootstrap-3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./lib/bootstrap-3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./main.css">
 	<script src="./head.js"></script>
 </head>
@@ -190,21 +190,22 @@ class NagfView {
 			<a class="navbar-brand" href="./">Nagf</a>
 		</div>
 		<div class="navbar-collapse">
-			<form class="navbar-form navbar-right" role="form" action="./" method="get">
+			<form class="navbar-form navbar-left" role="form" action="./" method="get">
 				<div class="form-group">
 					{$view->getProjectMenu()}
 				</div>
 				<button type="submit" class="btn btn-success only-no-js">Show</button>
 			</form>
 			{$view->getHostForm()}
+			{$view->getRangeForm()}
 		</div><!--/.nav-collapse -->
 	</div>
 </div>
 <div class="container">
 {$view->getPage()}
 </div>
-<script src="./lib/jquery-1.11.0/jquery.min.js"></script>
-<script src="./lib/bootstrap-3.1.1/js/bootstrap.min.js"></script>
+<script src="./lib/jquery-1.11.2/jquery.min.js"></script>
+<script src="./lib/bootstrap-3.3.4/js/bootstrap.min.js"></script>
 <script src="./main.js"></script>
 <footer class="nagf-footer" role="contentinfo">
 	<div class="container">

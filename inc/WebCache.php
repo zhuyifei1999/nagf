@@ -12,6 +12,9 @@ class WebCache {
 	/**
 	 * Get string data from a url (or cache).
 	 *
+	 * TODO: Migrate to using Krinkle/toollabs-base and its Cache system.
+	 * https://github.com/Krinkle/toollabs-base/blob/v0.5.0/src/Cache.php
+	 *
 	 * @param string $key
 	 * @param string $url
 	 * @param int $expire How long this may be cached

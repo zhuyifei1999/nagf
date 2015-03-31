@@ -5,14 +5,19 @@ class Graphite {
 	 */
 	public static function getProjects() {
 		$json = WebCache::get(
-			'graphite-index',
-			'http://graphite.wmflabs.org/metrics/find?query=*'
+			'wikitech-v1-projects',
+			'https://wikitech.wikimedia.org/w/api.php?format=json&'
+			. http_build_query(array(
+				'action' => 'query',
+				'list' => 'novaprojects',
+			))
 		);
 		$data = json_decode($json);
-		$projects = array_map(function ($obj) {
-			return $obj->id;
-		}, $data);
-		return $projects;
+		if (!isset($data->query->novaprojects)) {
+			return array();
+		}
+		sort($data->query->novaprojects);
+		return $data->query->novaprojects;
 	}
 
 	/**
@@ -21,14 +26,24 @@ class Graphite {
 	 */
 	public static function getHostsForProject($project) {
 		$json = WebCache::get(
-			'graphite-project-' . $project,
-			'http://graphite.wmflabs.org/metrics/find?'
-			. http_build_query(array('query' => "$project.*"))
+			'wikitech-v1-' . $project,
+			'https://wikitech.wikimedia.org/w/api.php?format=json&'
+			. http_build_query(array(
+				'action' => 'query',
+				'list' => 'novainstances',
+				// TODO: Don't hardcode eqiad (https://phabricator.wikimedia.org/T94514)
+				'niregion' => 'eqiad',
+				'niproject' => $project,
+			))
 		);
 		$data = json_decode($json);
-		$projects = array_map(function ($obj) {
-			return $obj->text;
-		}, $data);
-		return $projects;
+		if (!isset($data->query->novainstances)) {
+			return array();
+		}
+		$instances = array_map(function ($obj) {
+			return $obj->name;
+		}, $data->query->novainstances);
+		sort($instances);
+		return $instances;
 	}
 }

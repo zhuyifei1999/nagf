@@ -102,6 +102,9 @@ class NagfView {
 	 * @return string HTML
 	 */
 	public function getPage() {
+		if ($this->data->status) {
+			return $this->getStatusPage();
+		}
 		if ($this->data->project) {
 			return $this->getProjectPage(
 				$this->data->project,
@@ -185,14 +188,27 @@ class NagfView {
 			. '<p>Select a project from the menu to view the relevant monitoring graphs.</p>';
 	}
 
+	/**
+	 * @return string HTML
+	 */
+	protected function getStatusPage() {
+		list($code, $msg) = $this->data->status;
+		http_response_code($code);
+		return '<div class="alert alert-danger" role="alert">'
+			. htmlspecialchars($code) . ' Error: <strong>' . htmlspecialchars($msg) . '</strong>'
+			. '</div>';
+	}
+
 	public function output() {
 		$view = $this;
+		$pageHtml = $view->getPage();
+		$titleHtml = htmlspecialchars($view->data->title);
 		$html = <<<HTML
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US" class="no-js">
 <head>
 	<meta charset="utf-8">
-	<title>Nagf - wmflabs</title>
+	<title>{$titleHtml}</title>
 	<link rel="stylesheet" href="./lib/bootstrap-3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./main.css">
 <script>document.documentElement.className =
@@ -218,7 +234,7 @@ document.documentElement.className.replace( /(^|\s)no-js(\s|$)/, '$1js$2' );
 	</div>
 </div>
 <div class="container">
-{$view->getPage()}
+{$pageHtml}
 </div>
 <script src="./lib/jquery-1.11.2/jquery.min.js"></script>
 <script src="./lib/bootstrap-3.3.4/js/bootstrap.min.js"></script>

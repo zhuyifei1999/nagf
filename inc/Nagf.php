@@ -7,6 +7,8 @@ class Nagf {
 
 	public function __construct() {
 		$viewData = new stdClass();
+		$viewData->title = 'Nagf - wmflabs';
+		$viewData->status = null;
 		$viewData->project = null;
 		$viewData->hosts = null;
 		$viewData->hostGraphsConfig = $this->getHostGraphsConfig();
@@ -17,6 +19,9 @@ class Nagf {
 			if ($hosts) {
 				$viewData->project = $project;
 				$viewData->hosts = $hosts;
+			} else {
+				$viewData->title = 'Project not found - Nagf';
+				$viewData->status = array(404, 'Project not found');
 			}
 		}
 

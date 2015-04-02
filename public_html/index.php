@@ -12,7 +12,6 @@ try {
 	$view = $app->getView();
 	$html = $view->output();
 } catch (Exception $e) {
-	http_response_code(500);
 	$html = NagfView::error($e);
 }
 

@@ -241,8 +241,9 @@ HTML;
 		return $html;
 	}
 
-	public static function error(Exception $e) {
-		return '<!DOCTYPE html><title>Error</title><pre>'
+	public static function error(Exception $e, $statusCode = 500) {
+		http_response_code($statusCode);
+		return '<!DOCTYPE html><title>Error - Nagf</title><pre>'
 			. htmlspecialchars(
 				get_class($e) . ': ' . $e->getMessage() . "\n"
 				. ' in ' . $e->getFile() . ':' . $e->getLine() . "\n\n"

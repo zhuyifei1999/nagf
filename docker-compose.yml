@@ -1,0 +1,4 @@
+nagf:
+  build: .
+  ports:
+   - "8080"

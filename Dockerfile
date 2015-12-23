@@ -3,7 +3,7 @@ FROM debian:jessie
 MAINTAINER Yuvi Panda <yuvipanda@riseup.net>
 
 RUN apt-get update
-RUN apt-get install --yes lighttpd php5-cgi  ca-certificates
+RUN apt-get install --yes --no-install-recommends lighttpd php5-cgi  ca-certificates
 RUN mkdir -p /data/project/nagf
 RUN chown -R www-data:www-data /data
 

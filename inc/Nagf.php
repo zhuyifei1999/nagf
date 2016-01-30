@@ -59,7 +59,7 @@ class Nagf {
 			'memory' => array(
 				'title' => 'Memory',
 				'targets' => array(
-					'alias(color(stacked(HOST.memory.Inactive),"#5555cc"),"Inactive")',
+					'alias(color(stacked(diffSeries(HOST.memory.MemTotal,HOST.memory.{MemFree,Buffers,Cached})),"#5555cc"),"Used")',
 					'alias(color(stacked(HOST.memory.Cached),"#33cc33"),"Cached")',
 					'alias(color(stacked(HOST.memory.Buffers),"#99ff33"),"Buffers")',
 					'alias(alpha(color(stacked(HOST.memory.MemFree),"#f0ffc0"),0.4),"Free")',
@@ -67,7 +67,7 @@ class Nagf {
 					'alias(color(HOST.memory.MemTotal,"red"),"Total")',
 				),
 				'overview' => array(
-					'alias(color(stacked(sum(HOST.memory.Inactive)),"#5555cc"),"Inactive")',
+					'alias(color(stacked(diffSeries(sum(HOST.memory.MemTotal),sum(HOST.memory.{MemFree,Buffers,Cached}))),"#5555cc"),"Used")',
 					'alias(color(stacked(sum(HOST.memory.Cached)),"#33cc33"),"Cached")',
 					'alias(color(stacked(sum(HOST.memory.Buffers)),"#99ff33"),"Buffers")',
 					'alias(alpha(color(stacked(sum(HOST.memory.MemFree)),"#f0ffc0"),0.4),"Free")',

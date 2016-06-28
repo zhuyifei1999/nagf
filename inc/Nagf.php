@@ -82,7 +82,7 @@ class Nagf {
 			'disk' => array(
 				'title' => 'Disk space',
 				'targets' => array(
-					'aliasByNode(HOST.diskspace.*.byte_avail,-3,-2)',
+					'aliasByNode(maximumAbove(HOST.diskspace.*.byte_avail,0),-3,-2)',
 				),
 				'overview' => array(
 					'alias(stacked(sum(HOST.diskspace.*.byte_avail)),"byte_avail")',

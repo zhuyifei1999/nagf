@@ -163,7 +163,7 @@ class NagfView {
 						continue;
 					}
 					$title = "$hostTitle {$graph['title']} last {$range}";
-					$html .= '<img width="800" height="250" src="//graphite.wmflabs.org/render/?'
+					$html .= '<img width="800" height="250" src="//graphite-labs.wikimedia.org/render/?'
 						. htmlspecialchars(http_build_query(array(
 							'title' => $title,
 							'width' => 800,

@@ -54,6 +54,9 @@ class Nagf {
 					'alias(color(stacked(HOST.cpu.total.iowait),"#ff8a60"),"Wait I/O")',
 					'alias(alpha(color(stacked(HOST.cpu.total.idle),"#e2e2f2"),0.4),"Idle")',
 				),
+				'render' => array(
+					'yMax' => 100,
+				),
 				'overview' => 'sum',
 			),
 			'memory' => array(

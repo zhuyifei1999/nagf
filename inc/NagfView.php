@@ -149,8 +149,10 @@ class NagfView {
 							return preg_replace('/HOST([^\),]+)/', $graph['overview'] . '(HOST$1)', $target);
 						}, $graph['targets']);
 					}
+					$renderOptions = array();
 				} else {
 					$targets = $graph['targets'];
+					$renderOptions = isset( $graph['render'] ) ? $graph['render'] : array();
 				}
 
 				$targetQuery = '';
@@ -171,7 +173,7 @@ class NagfView {
 							'from' => '-1' . $range,
 							'hideLegend' => 'false',
 							'uniqueLegend' => 'true',
-						)) . $targetQuery)
+						) + $renderOptions) . $targetQuery)
 						. '" alt="' . htmlspecialchars($title) . '" title="' . htmlspecialchars($title) . '">';
 				}
 			}

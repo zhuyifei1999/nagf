@@ -45,6 +45,20 @@ class Nagf {
 
 	protected function getHostGraphsConfig() {
 		return array(
+			'load' => array(
+				'title' => 'Load',
+				'targets' => array(
+					'alias(color(stacked(HOST.loadavg.01),"#bbbbbb"),"1-min")',
+					'alias(color(HOST.cpu.cpu_count,"red"),"CPUs")',
+					'alias(color(HOST.loadavg.processes_running,"#2030f4"),"Procs")',
+				),
+				'overview' => array(
+					'alias(color(stacked(sum(HOST.loadavg.01)),"#bbbbbb"),"1-min")',
+					'alias(color(sum(HOST.cpu.cpu_count),"red"),"CPUs")',
+					'alias(color(sum(offset(scale(HOST.loadavg.01,0),1)),"green"),"Nodes")',
+					'alias(color(sum(HOST.loadavg.processes_running),"#2030f4"),"Procs")',
+				),
+			),
 			'cpu' => array(
 				'title' => 'CPU',
 				'targets' => array(

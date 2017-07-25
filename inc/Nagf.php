@@ -85,12 +85,11 @@ class Nagf {
 			'disk' => array(
 				'title' => 'Disk space',
 				'targets' => array(
-					'aliasByNode(maximumAbove(HOST.diskspace.*.byte_avail,0),-3,-2)',
+					'aliasByNode(maximumBelow(maximumAbove(HOST.diskspace.*.byte_avail,0),1099511627776),-3,-2)',
 				),
 				'overview' => array(
-					'alias(stacked(sum(HOST.diskspace.*.byte_avail)),"byte_avail")',
+					'alias(sum(maximumBelow(maximumAbove(HOST.diskspace.*.byte_avail,0),1099511627776)),"byte_avail")',
 				),
-				'overview' => 'sum',
 			),
 			'network-bytes' => array(
 				'title' => 'Network bytes',
